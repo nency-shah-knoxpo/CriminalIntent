@@ -13,6 +13,17 @@
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$s crimes</string>
+    <string name="label_crime_suspect">Choose suspect</string>
+    <string name="label_crime_report">Send Crime report</string>
+
+    <string name="crime_report">The crime was discovered on %2s. %3s,and %4s</string>
+
+    <string name="crime_report_solved">The case is solved</string>
+    <string name="crime_report_not_solved">The case is not solved</string>
+    <string name="crime_report_suspect">the suspect is %s</string>
+    <string name="crime_report_no_suspect">There is no suspect</string>
+ <string name="crime_report_subject">Criminal Intent crime Report</string>
+    <string name="send_report">Send crime report via</string>
 </resources>
 
 
