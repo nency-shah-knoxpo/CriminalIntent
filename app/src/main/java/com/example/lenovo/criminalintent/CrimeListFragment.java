@@ -1,5 +1,7 @@
 package com.example.lenovo.criminalintent;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,9 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
+
+
 
 public class CrimeListFragment extends Fragment {
 
@@ -24,6 +27,23 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private boolean mSubtitleVisible;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+
+    private   CallBack mCallBacks;
+   public interface CallBack{
+        void onCrimeSelected(Crime crime);
+   }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallBacks =(CallBack)getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallBacks=null;
+    }
 
     @Override
     public void onResume() {
@@ -55,9 +75,11 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_new_crime:
                 Crime crime = new Crime();
                 CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePagerActivity
+               /* Intent intent = CrimePagerActivity
                         .newIntent(getActivity(), crime.getID());
-                startActivity(intent);
+                startActivity(intent);*/
+               updateUI();
+               mCallBacks.onCrimeSelected(crime);
                 return true;
 
             case R.id.menu_item_show_subtitle:
@@ -102,7 +124,7 @@ public class CrimeListFragment extends Fragment {
     }
 
 
-    private void updateUI() {
+    public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
@@ -153,9 +175,11 @@ public class CrimeListFragment extends Fragment {
             /*Intent i = new Intent(getContext(),CrimeActivity.class);
             i.putExtra("Crime_ID",mCrime.getID());
             */
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getID());
+           /* Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getID());
             startActivity(intent);
+*/
 
+           mCallBacks.onCrimeSelected(mCrime);
         }
     }
 
